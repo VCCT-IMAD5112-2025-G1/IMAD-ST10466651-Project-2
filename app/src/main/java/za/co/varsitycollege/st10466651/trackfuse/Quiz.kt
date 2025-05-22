@@ -11,24 +11,24 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+
+var currentIndex = 0
+var score = 0
+
 data class QuestionList(
     val question: String,
     val answer: Boolean,
     var userAnswer: Boolean? = null
 )
 
-var currentIndex = 0
-var score = 0
+val questionList = mutableListOf(
+    QuestionList("The Great Fire of London in 1666 started in a bakery.", true),
+    QuestionList("Julius Caesar was the first Emperor of Rome.", false),
+    QuestionList("The Berlin Wall fell in 1989, leading to the reunification of Germany.", true),
+    QuestionList("Napoleon Bonaparte was born in France.", false),
+    QuestionList("The Cold War involved direct military combat between the USA and the Soviet Union.", false)
+)
 class Quiz : AppCompatActivity() {
-
-    private val questionList = mutableListOf(
-        QuestionList("The Great Fire of London in 1666 started in a bakery.", true),
-        QuestionList("Julius Caesar was the first Emperor of Rome.", false),
-        QuestionList("The Berlin Wall fell in 1989, leading to the reunification of Germany.", true),
-        QuestionList("Napoleon Bonaparte was born in France.", false),
-        QuestionList("The Cold War involved direct military combat between the USA and the Soviet Union.", false)
-    )
-
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,6 +82,8 @@ class Quiz : AppCompatActivity() {
             val intent = Intent(this, Results::class.java)
             startActivity(intent)
         }
+
+
     }
 
     fun showQuestion() {
