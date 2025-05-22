@@ -11,22 +11,22 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-data class questionList(
+data class QuestionList(
     val question: String,
     val answer: Boolean,
     var userAnswer: Boolean? = null
 )
 
 var currentIndex = 0
-
+var score = 0
 class Quiz : AppCompatActivity() {
 
     private val questionList = mutableListOf(
-        questionList("The Great Fire of London in 1666 started in a bakery.", true),
-        questionList("Julius Caesar was the first Emperor of Rome.", false),
-        questionList("The Berlin Wall fell in 1989, leading to the reunification of Germany.", true),
-        questionList("Napoleon Bonaparte was born in France.", false),
-        questionList("The Cold War involved direct military combat between the USA and the Soviet Union.", false)
+        QuestionList("The Great Fire of London in 1666 started in a bakery.", true),
+        QuestionList("Julius Caesar was the first Emperor of Rome.", false),
+        QuestionList("The Berlin Wall fell in 1989, leading to the reunification of Germany.", true),
+        QuestionList("Napoleon Bonaparte was born in France.", false),
+        QuestionList("The Cold War involved direct military combat between the USA and the Soviet Union.", false)
     )
 
     @SuppressLint("MissingInflatedId")
@@ -48,16 +48,18 @@ class Quiz : AppCompatActivity() {
         var counter = 0
         end.visibility = View.GONE
         showQuestion()
+        next.isEnabled = false
 
         next.setOnClickListener {
-            counter++
-            questions.text = questionList[counter].question
             wrong.isEnabled = true
             right.isEnabled = true
+            counter++
+            questions.text = questionList[counter].question
             if(counter == 4) {
                 next.visibility = View.GONE
                 end.visibility = View.VISIBLE
             }
+            next.isEnabled = false
         }
 
         right.setOnClickListener {
@@ -65,14 +67,15 @@ class Quiz : AppCompatActivity() {
             // User answers "true" for the first question
             questionList[currentIndex].userAnswer = true
             checkAnswer(true)
-
+            next.isEnabled = true
         }
 
         wrong.setOnClickListener {
-            right.isEnabled = false
+
             // User answers "false" for the first question
             questionList[currentIndex].userAnswer = false
             checkAnswer(false)
+            next.isEnabled = true
         }
 
         end.setOnClickListener {
@@ -95,17 +98,21 @@ class Quiz : AppCompatActivity() {
 
         Toast.makeText(
             this,
-            if (isCorrect) "Correct! 🎉" else "Wrong! ❌",
+            if (isCorrect) "Correct! 🎉"
+            else "Incorrect! ❌",
             Toast.LENGTH_SHORT
         ).show()
 
-        // Move to next question (optional)
+        // Move to next question
         if (currentIndex < questionList.size - 1) {
             currentIndex++
             // update UI with new question here
         } else {
             Toast.makeText(this, "Quiz finished!", Toast.LENGTH_SHORT).show()
             // Maybe show final score
+        }
+        if (isCorrect){
+            score++
         }
     }
 }
