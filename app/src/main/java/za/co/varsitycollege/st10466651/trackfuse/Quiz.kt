@@ -76,6 +76,7 @@ class Quiz : AppCompatActivity() {
             questionList[currentIndex].userAnswer = false
             checkAnswer(false)
             next.isEnabled = true
+
         }
 
         end.setOnClickListener {
