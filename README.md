@@ -27,7 +27,7 @@ It is locked to only allow you to click next once you've answered the question
 #### How do I fix my app that crashed?
 Close and reopen the app, if not then call tech support
 
-### Why is my Review button not working
+### Why is my Review button not working?
 Try to redo the quiz and see if it works
 
 ## Requirements
