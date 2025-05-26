@@ -46,11 +46,13 @@ class Quiz : AppCompatActivity() {
         val next = findViewById<Button>(R.id.btnNext)
         val end = findViewById<Button>(R.id.btnDone)
         var counter = 0
+        var clicks = 0
         end.visibility = View.GONE
         showQuestion()
         next.isEnabled = false
 
         next.setOnClickListener {
+            clicks = 0
             wrong.isEnabled = true
             right.isEnabled = true
             counter++
@@ -63,20 +65,28 @@ class Quiz : AppCompatActivity() {
         }
 
         right.setOnClickListener {
+            clicks++
             wrong.isEnabled = false
             // User answers "true" for the first question
             questionList[currentIndex].userAnswer = true
             checkAnswer(true)
             next.isEnabled = true
+            if(clicks == 1){
+                right.isEnabled = false
+            }
         }
 
-        wrong.setOnClickListener {
 
+        wrong.setOnClickListener {
+            clicks++
+            right.isEnabled = false
             // User answers "false" for the first question
             questionList[currentIndex].userAnswer = false
             checkAnswer(false)
             next.isEnabled = true
-
+            if(clicks == 1){
+                wrong.isEnabled = false
+            }
         }
 
         end.setOnClickListener {
